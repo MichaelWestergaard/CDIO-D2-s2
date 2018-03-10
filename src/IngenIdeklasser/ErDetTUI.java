@@ -11,6 +11,16 @@ public class ErDetTUI {
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean checkId(int batchId) {
+		for(int i = 0; i < users.size(); i++) {
+			if(users.get(i).getUserId() == userId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	public void insertBatchNo() {
 		int batchId = 0;
 
@@ -18,14 +28,18 @@ public class ErDetTUI {
 			System.out.println("Enter Batch Number (1000-9999): ");
 			int desiredID = scan.nextInt();
 
-			if(!batchNo.checkId(desiredID) && desiredID >= 11 && desiredID <= 99) { //Skal have oprettet "checkUsername" i DAO. Skal returnere true, hvis brugernavnet er gyldigt og ledigt.
-				batchNo = desiredID;
+			if(!batchId.checkId(desiredID) && desiredID >= 1000 && desiredID <= 9999) { //Skal have oprettet "checkUsername" i DAO. Skal returnere true, hvis brugernavnet er gyldigt og ledigt.
+				batchId = desiredID;
 			} else {
-				System.out.println("The user ID, you entered, is either taken or invalid.");
+				System.out.println("The Batch number, you entered, is either taken or invalid.");
 			}
 		}
 
 	}
+	
+	
+
+
 
 	public boolean checkUnloaded() {
 		if(vægt==0) {
