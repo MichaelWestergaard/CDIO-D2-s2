@@ -57,13 +57,13 @@ public void insertBatchNo() {
 
 }
 
-public boolean checkUnloaded() {
-	if(vægt==0) {
-		return true;
-	} else {
-		return false;
-	}
-}
+//public boolean checkUnloaded() {
+//	if(vægt==0) {
+//		return true;
+//	} else {
+//		return false;
+//	}
+//}
 }
 
 	
