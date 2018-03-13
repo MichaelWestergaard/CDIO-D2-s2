@@ -87,14 +87,14 @@ public class SocketController implements Runnable {
 		
 		while(!userConfirmed) {
 			String[] inputArr = readLine.split(" ");
-			String input = inputArr[2].replace("\"", "");
+			int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 			
-			if(dao.checkUserID(Integer.parseInt(input))) {
-				write("Confirm, that this is your name: " + dao.getUsername() + "\n1 = \"OK\", 0 = \"Cancel\"");				
+			if(dao.checkUserID(input)) {
+				write("Confirm, that this is your name: " + dao.getUsername(input) + "\n1 = \"OK\", 0 = \"Cancel\"");				
 				inputArr = readLine.split(" ");
-				input = inputArr[2].replace("\"", "");
+				input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
-				if(Integer.parseInt(input) == 1) {
+				if(input == 1) {
 					userConfirmed = true;
 				} else {
 					write("Enter another ID: ");
