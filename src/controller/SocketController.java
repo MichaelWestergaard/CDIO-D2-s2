@@ -13,9 +13,11 @@ import main.Main;
 
 public class SocketController implements Runnable {
 	Socket socket;
+	DAO dao;
 	
 	public SocketController() {
 		super();
+		dao = new DAO();
 	}
 
 	
@@ -64,6 +66,12 @@ public class SocketController implements Runnable {
 		
 		
 		return 8.0;
+	}
+
+
+	public void loginProcedure() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
