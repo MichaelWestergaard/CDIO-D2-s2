@@ -82,8 +82,29 @@ public class SocketController implements Runnable {
 
 
 	public void loginProcedure() {
-		write("Enter your ID: ");
-		String[] split = readLine.split(" ");
+		write("Enter your ID: \nAnd press \"OK\"");
+		boolean userConfirmed = false;
+		
+		while(!userConfirmed) {
+			String[] inputArr = readLine.split(" ");
+			String input = inputArr[2].replace("\"", "");
+			
+			if(dao.checkUserID(Integer.parseInt(input))) {
+				write("Confirm, that this is your name: " + dao.getUsername() + "\n1 = \"OK\", 0 = \"Cancel\"");				
+				inputArr = readLine.split(" ");
+				input = inputArr[2].replace("\"", "");
+				
+				if(Integer.parseInt(input) == 1) {
+					userConfirmed = true;
+				} else {
+					write("Enter another ID: ");
+				}
+			} else {
+				write("ID not found! \nTry again.");
+			}
+		}
+		
+		
 	}
 	
 	
