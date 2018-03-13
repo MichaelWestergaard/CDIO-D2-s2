@@ -11,8 +11,7 @@ public class Main {
 		//socketcontroller.write("Test");
 		socketcontroller.getLoad();
 	
-	
 		
-		socketcontroller.loginProcedure();
+		//socketcontroller.loginProcedure();
 	}
 }
