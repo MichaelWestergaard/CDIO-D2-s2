@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class DAO {
 
+	private double load;
+	private double Tara;
 	private List<User> users = new ArrayList<User>();	
 	private List<Batch> batches = new ArrayList<Batch>();
 	Scanner scan = new Scanner(System.in);
@@ -17,6 +19,7 @@ public class DAO {
 	public DAO () {		
 		users.add(new User(12, "Anders And"));
 		batches.add(new Batch(1234, "Salt"));
+		
 	};
 
 	public boolean checkUserID(int userID) {
