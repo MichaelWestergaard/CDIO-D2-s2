@@ -81,7 +81,6 @@ public class SocketController implements Runnable {
 		
 	}
 
-
 	public void loginProcedure() {
 		write("Enter your ID: \nAnd press \"OK\"");
 		boolean userConfirmed = false;
@@ -103,15 +102,6 @@ public class SocketController implements Runnable {
 			} else {
 				write("ID not found! \nTry again.");
 			}
-		}
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
+		}		
+	}	
 }
