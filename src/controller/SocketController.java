@@ -13,7 +13,7 @@ import main.Main;
 
 public class SocketController implements Runnable {
 	Socket socket;
-	public static String readLine = "";
+	static String readLine = null;
 	DAO dao;
 	
 	public SocketController() {
@@ -71,37 +71,40 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 		
-		while(readLine.equals("")) {
+		while(readLine == null) {
 			
 		}
 		
 		char[] readChar = readLine.toCharArray();
-		double loadValue = Double.parseDouble(new StringBuilder().append(readChar[9]).append(readChar[10]).append(readChar[11]).toString());
-		System.out.println(loadValue);
+		//Push
 		
 	}
+	
+	public void getTara() {
+		try {
+			OutputStream outputStream = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(outputStream);
+			pw.println("T crlf");
+			pw.flush();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		while(readLine == null) {
+			
+		}
+		char[] readchar = readLine.toCharArray();
+	}
+
 
 	public void loginProcedure() {
-		write("Enter your ID: \nAnd press \"OK\"");
-		boolean userConfirmed = false;
+		// TODO Auto-generated method stub
 		
-		while(!userConfirmed) {
-			String[] inputArr = readLine.split(" ");
-			int input = Integer.parseInt(inputArr[2].replace("\"", ""));
-			
-			if(dao.checkUserID(input)) {
-				write("Confirm, that this is your name: " + dao.getUsername(input) + "\n1 = \"OK\", 0 = \"Cancel\"");				
-				inputArr = readLine.split(" ");
-				input = Integer.parseInt(inputArr[2].replace("\"", ""));
-				
-				if(input == 1) {
-					userConfirmed = true;
-				} else {
-					write("Enter another ID: ");
-				}
-			} else {
-				write("ID not found! \nTry again.");
-			}
-		}		
-	}	
+	}
+	
+	
+	
+	
+	
+	
+	
 }
