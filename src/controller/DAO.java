@@ -41,22 +41,6 @@ public boolean checkBatchId(int batchId) {
 }
 
 
-public void insertBatchNo() {
-	int batchId = 0;
-
-	while(batchId == 0) {
-		System.out.println("Enter Batch Number (1000-9999): ");
-		int desiredID = scan.nextInt();
-
-		if(checkBatchId(desiredID) && desiredID >= 1000 && desiredID <= 9999) { //Skal have oprettet "checkUsername" i DAO. Skal returnere true, hvis brugernavnet er gyldigt og ledigt.
-			batchId = desiredID;
-		} else {
-			System.out.println("The Batch number, you entered, invalid.");
-		}
-	}
-
-}
-
 //public boolean checkUnloaded() {
 //	if(vægt==0) {
 //		return true;
@@ -64,8 +48,59 @@ public void insertBatchNo() {
 //		return false;
 //	}
 //}
+
+public void insertBatchNo() {  //Skal det være en metode, elelr skal det bare bruges sammen med den med id?
+	int batchId = 0;
+
+	while(batchId == 0) {
+		System.out.println("Enter Batch Number (1000-9999): ");
+		if(scan.hasNextInt() ) {
+			int desiredID = scan.nextInt();
+
+		if(checkBatchId(desiredID) && desiredID >= 1000 && desiredID <= 9999) {
+			batchId = desiredID;
+		} else {
+			System.out.println("The Batch number you entered doesn't exist or are invalid.");
+		}
+		} else {
+		System.out.println("Please, enter a number!");
+scan.next();
+}
+	}
+}
+		
+		
+		
+		
+
+		
+public void insertUserIDNo() {  //Skal det være en metode, elelr skal det bare bruges sammen med den med id?
+			int UserID = 0;
+
+			while(UserID == 0) {
+				System.out.println("Enter an ID Number (11-99): ");
+				if(scan.hasNextInt() ) {
+					int desiredUserID = scan.nextInt();
+
+				if(checkUserID(desiredUserID) && desiredUserID >= 11 && desiredUserID <= 99) {
+					UserID = desiredUserID;
+				} else {
+					System.out.println("The ID number you entered doesn't exist or are invalid.");
+				}
+				} else {
+				System.out.println("Please, enter a number!");
+				scan.next();
+			}
+
+
+
+
+
+			}
 }
 
+
+}
 	
 	
 
