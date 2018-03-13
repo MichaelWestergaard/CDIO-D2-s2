@@ -8,8 +8,8 @@ public class Main {
 		SocketController socketcontroller = new SocketController();
 		socketcontroller.init();
 		new Thread(socketcontroller).start();
-		socketcontroller.write("Test");
-	
+		//socketcontroller.write("Test");
+		socketcontroller.getLoad();
 	
 	
 	}
