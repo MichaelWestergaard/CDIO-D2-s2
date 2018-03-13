@@ -13,6 +13,7 @@ import main.Main;
 
 public class SocketController implements Runnable {
 	Socket socket;
+	static String readLine = null;
 	DAO dao;
 	
 	public SocketController() {
@@ -37,7 +38,7 @@ public class SocketController implements Runnable {
 			InputStream inputStream = socket.getInputStream();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 			while(true) {
-			String readLine = bufferedReader.readLine();
+			readLine = bufferedReader.readLine();
 			System.out.println(readLine);
 			}
 		} catch (IOException e) {
@@ -60,12 +61,23 @@ public class SocketController implements Runnable {
 	}
 	
 	
-	public double getLoad() {
-		//Tim
+	public void getLoad() {
+		try {
+			OutputStream outputStream = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(outputStream);
+			pw.println("S crlf");
+			pw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+		while(readLine == null) {
+			
+		}
 		
+		char[] readChar = readLine.toCharArray();
+		//Push
 		
-		return 8.0;
 	}
 
 
