@@ -13,7 +13,7 @@ import main.Main;
 
 public class SocketController implements Runnable {
 	Socket socket;
-	static String readLine = null;
+	public static String readLine = "";
 	DAO dao;
 	
 	public SocketController() {
@@ -71,12 +71,13 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 		
-		while(readLine == null) {
+		while(readLine.equals("")) {
 			
 		}
 		
 		char[] readChar = readLine.toCharArray();
-		//Push
+		double loadValue = Double.parseDouble(new StringBuilder().append(readChar[9]).append(readChar[10]).append(readChar[11]).toString());
+		System.out.println(loadValue);
 		
 	}
 
