@@ -70,8 +70,8 @@ public class SocketController implements Runnable {
 
 
 	public void loginProcedure() {
-		// TODO Auto-generated method stub
-		
+		write("Enter your ID: ");
+		String[] split = readLine.split(" ");
 	}
 	
 	
