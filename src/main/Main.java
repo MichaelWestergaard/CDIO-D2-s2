@@ -4,7 +4,7 @@ import controller.SocketController;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		SocketController socketcontroller = new SocketController();
 		socketcontroller.init();
 		new Thread(socketcontroller).start();
@@ -12,6 +12,7 @@ public class Main {
 		socketcontroller.getLoad();
 	
 	
+		
+		socketcontroller.loginProcedure();
 	}
-
 }

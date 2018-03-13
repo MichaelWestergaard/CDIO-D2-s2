@@ -14,9 +14,11 @@ import main.Main;
 public class SocketController implements Runnable {
 	Socket socket;
 	static String readLine = null;
+	DAO dao;
 	
 	public SocketController() {
 		super();
+		dao = new DAO();
 	}
 
 	
@@ -75,6 +77,12 @@ public class SocketController implements Runnable {
 		
 		char[] readChar = readLine.toCharArray();
 		//Push
+		
+	}
+
+
+	public void loginProcedure() {
+		// TODO Auto-generated method stub
 		
 	}
 	
