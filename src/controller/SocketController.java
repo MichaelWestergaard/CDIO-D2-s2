@@ -74,7 +74,7 @@ public class SocketController implements Runnable {
 		}
 		
 		char[] readChar = readLine.toCharArray();
-		
+		//Push
 		
 	}
 	
