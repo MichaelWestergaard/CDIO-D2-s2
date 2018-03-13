@@ -30,6 +30,15 @@ public class DAO {
 		return false;
 	}
 
+	public String getUsername(int UserID) {
+		for(int i = 0; i < users.size(); i++) {
+			if (UserID == users.get(i).getUserID() ) {
+				return users.get(i).getUsername();
+			}
+		}
+		return null;
+	}
+	
 	public boolean checkBatchId(int batchID) {
 		if(batchID >= 11 && batchID <= 99) {
 			for(int i = 0; i < batches.size(); i++) {
