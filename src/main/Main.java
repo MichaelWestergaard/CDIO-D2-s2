@@ -4,14 +4,11 @@ import controller.SocketController;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		SocketController socketcontroller = new SocketController();
 		socketcontroller.init();
 		new Thread(socketcontroller).start();
-		socketcontroller.write("Test");
-	
-	
-	
+		
+		socketcontroller.loginProcedure();
 	}
-
 }
