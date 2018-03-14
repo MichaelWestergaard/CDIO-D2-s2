@@ -221,6 +221,40 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}		
 	}
+
+
+	public void taraProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Place tara on the weight, then confirm.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean taraConfirmed = false;
+			while(!taraConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(input == 1) {
+					taraConfirmed = true;
+					pw.println("T crlf");
+					pw.flush();
+					System.out.println("tara success");
+				} else {
+					msg = "Try again and confirm.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 	
 	
