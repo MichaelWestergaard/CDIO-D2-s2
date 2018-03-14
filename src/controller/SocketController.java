@@ -186,6 +186,41 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
+
+
+	public void unloadProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Make sure the weight is unloaded.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean unloadedConfirmed = false;
+			while(!unloadedConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(input == 1) {
+					unloadedConfirmed = true;
+					pw.println("T crlf");
+					pw.flush();
+					System.out.println("unload success");
+				} else {
+					msg = "Unload the weight and confirm.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 	
 	

@@ -14,5 +14,6 @@ public class Main {
 		
 		socketcontroller.loginProcedure();
 		socketcontroller.batchProcedure();
+		socketcontroller.unloadProcedure();
 	}
 }
