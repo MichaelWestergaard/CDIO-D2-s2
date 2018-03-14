@@ -141,6 +141,51 @@ public class SocketController implements Runnable {
 		}
 		
 	}
+
+	public void batchProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Enter batch-number";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean batchConfirmed = false;
+			while(!batchConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(dao.checkBatchId(input)) {
+					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+					
+					inputArr = reader.readLine().split(" ");
+					input = Integer.parseInt(inputArr[2].replace("\"", ""));
+					
+					if(input == 1) {
+						batchConfirmed = true;
+						System.out.println("batch success");
+					} else {
+						msg = "Enter another batch-number: ";
+						pw.println("RM20 8 " + msg);
+						pw.flush();
+					}
+					
+				} else {
+					msg = "Batch not found! Try again.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
