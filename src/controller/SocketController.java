@@ -96,8 +96,48 @@ public class SocketController implements Runnable {
 	}
 
 
-	public void loginProcedure() {
-		// TODO Auto-generated method stub
+	public void loginProcedure() {		
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Enter your ID: ";
+			pw.println("RM20 8 " + msg);
+			pw.flush();	
+			
+			boolean userConfirmed = false;
+			while(!userConfirmed) {			
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(dao.checkUserID(input)) {
+					msg = "Confirm: " + dao.getUsername(input) + "? 1=Y, 0=N";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+					
+					inputArr = reader.readLine().split(" ");
+					input = Integer.parseInt(inputArr[2].replace("\"", ""));
+					
+					if(input == 1) {
+						userConfirmed = true;
+					} else {
+						msg = "Enter another ID: ";
+						pw.println("RM20 8 " + msg);
+						pw.flush();
+					}
+					
+				} else {
+					msg = "ID not found! Try again.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
