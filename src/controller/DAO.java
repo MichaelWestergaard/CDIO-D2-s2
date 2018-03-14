@@ -33,10 +33,19 @@ public class DAO {
 		return false;
 	}
 
-	public String getUsername(int UserID) {
+	public String getUsername(int userID) {
 		for(int i = 0; i < users.size(); i++) {
-			if (UserID == users.get(i).getUserID() ) {
+			if (userID == users.get(i).getUserID() ) {
 				return users.get(i).getUsername();
+			}
+		}
+		return null;
+	}
+	
+	public String getBatchName(int batchID) {
+		for(int i = 0; i < batches.size(); i++) {
+			if (batchID == batches.get(i).getBatchID()) {
+				return batches.get(i).getBatchName();
 			}
 		}
 		return null;
