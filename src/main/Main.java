@@ -9,9 +9,9 @@ public class Main {
 		socketcontroller.init();
 		new Thread(socketcontroller).start();
 		//socketcontroller.write("Test");
-		socketcontroller.getLoad();
+		//socketcontroller.getLoad();
 	
 		
-		//socketcontroller.loginProcedure();
+		socketcontroller.loginProcedure();
 	}
 }

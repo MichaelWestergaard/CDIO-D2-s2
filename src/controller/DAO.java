@@ -23,7 +23,7 @@ public class DAO {
 	};
 
 	public boolean checkUserID(int userID) {
-		if(userID >= 1000 && userID <= 9999) {
+		if(userID >= 11 && userID <= 99) {
 			for(int i = 0; i < users.size(); i++) {
 				if(users.get(i).getUserID() == userID) {
 					return true;
@@ -43,7 +43,7 @@ public class DAO {
 	}
 	
 	public boolean checkBatchId(int batchID) {
-		if(batchID >= 11 && batchID <= 99) {
+		if(batchID >= 1000 && batchID <= 9999) {
 			for(int i = 0; i < batches.size(); i++) {
 				if(batches.get(i).getBatchID() == batchID) {
 					return true;

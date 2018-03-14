@@ -103,12 +103,12 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "Enter your ID: ";
-			pw.println("RM20 8 " + msg);
+			String msg = "Enter your ID:";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 			pw.flush();	
 			
 			boolean userConfirmed = false;
-			while(!userConfirmed) {			
+			while(!userConfirmed) {
 				String[] inputArr = reader.readLine().split(" ");
 				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
@@ -122,6 +122,7 @@ public class SocketController implements Runnable {
 					
 					if(input == 1) {
 						userConfirmed = true;
+						System.out.println("success");
 					} else {
 						msg = "Enter another ID: ";
 						pw.println("RM20 8 " + msg);
