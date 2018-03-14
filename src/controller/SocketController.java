@@ -159,7 +159,7 @@ public class SocketController implements Runnable {
 				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
 				if(dao.checkBatchId(input)) {
-					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N";
+					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N"; 
 					pw.println("RM20 8 " + msg);
 					pw.flush();
 					
