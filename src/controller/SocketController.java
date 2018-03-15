@@ -119,7 +119,7 @@ public class SocketController implements Runnable {
 				
 				if(dao.checkUserID(input)) {
 					msg = "Confirm: " + dao.getUsername(input) + "? 1=Y, 0=N";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 					
 					inputArr = reader.readLine().split(" ");
@@ -130,13 +130,13 @@ public class SocketController implements Runnable {
 						System.out.println("success");
 					} else {
 						msg = "Enter another ID: ";
-						pw.println("RM20 8 " + msg);
+						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 						pw.flush();
 					}
 					
 				} else {
 					msg = "ID not found! Try again.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -166,7 +166,7 @@ public class SocketController implements Runnable {
 				
 				if(dao.checkBatchId(input)) {
 					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N"; 
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 					
 					currentBatchID = input;
@@ -179,13 +179,13 @@ public class SocketController implements Runnable {
 						System.out.println("batch success");
 					} else {
 						msg = "Enter another batch-number: ";
-						pw.println("RM20 8 " + msg);
+						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 						pw.flush();
 					}
 					
 				} else {
 					msg = "Batch not found! Try again.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -219,7 +219,7 @@ public class SocketController implements Runnable {
 					System.out.println("unload success");
 				} else {
 					msg = "Unload the weight and confirm.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -255,7 +255,7 @@ public class SocketController implements Runnable {
 					System.out.println("tara success");
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -291,7 +291,7 @@ public class SocketController implements Runnable {
 					System.out.println("tara success");
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -324,7 +324,7 @@ public class SocketController implements Runnable {
 					bruttoConfirmed = true;
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
@@ -357,7 +357,7 @@ public class SocketController implements Runnable {
 					System.out.println("tara success");
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 " + msg);
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
 					pw.flush();
 				}
 			}
