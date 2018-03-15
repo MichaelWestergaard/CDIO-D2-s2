@@ -8,8 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import main.Main;
+import java.util.concurrent.TimeUnit;
 
 public class SocketController implements Runnable {
 	Socket socket;
@@ -25,7 +24,7 @@ public class SocketController implements Runnable {
 	
 	public void init() {
 		try {
-			socket = new Socket("localhost", 8000);
+			socket = new Socket("169.254.2.2", 8000);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -53,7 +52,7 @@ public class SocketController implements Runnable {
 		try {
 			OutputStream outputStream = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(outputStream);
-			pw.println("RM20 8 \""+ message +"\" \"\" \"&3\" crlf");
+			pw.println("RM20 8 \""+ message +"\" \"\" \"&3\"");
 			pw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,7 +65,7 @@ public class SocketController implements Runnable {
 		try {
 			OutputStream outputStream = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(outputStream);
-			pw.println("S crlf");
+			pw.println("S");
 			pw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,7 +90,7 @@ public class SocketController implements Runnable {
 		try {
 			OutputStream outputStream = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(outputStream);
-			pw.println("T crlf");
+			pw.println("T");
 			pw.flush();
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -109,17 +108,18 @@ public class SocketController implements Runnable {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
 			String msg = "Enter your ID:";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean userConfirmed = false;
 			while(!userConfirmed) {
-				String[] inputArr = reader.readLine().split(" ");
+				String inputString = reader.readLine();
+				String[] inputArr = inputString.split(" ");
 				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
 				if(dao.checkUserID(input)) {
-					msg = "Confirm: " + dao.getUsername(input) + "? 1=Y, 0=N";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					msg = dao.getUsername(input) + "? 1=Y, 0=N";
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 					
 					inputArr = reader.readLine().split(" ");
@@ -130,13 +130,13 @@ public class SocketController implements Runnable {
 						System.out.println("success");
 					} else {
 						msg = "Enter another ID: ";
-						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 						pw.flush();
 					}
 					
 				} else {
 					msg = "ID not found! Try again.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -156,7 +156,7 @@ public class SocketController implements Runnable {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
 			String msg = "Enter batch-number";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean batchConfirmed = false;
@@ -166,7 +166,7 @@ public class SocketController implements Runnable {
 				
 				if(dao.checkBatchId(input)) {
 					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N"; 
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 					
 					currentBatchID = input;
@@ -179,13 +179,13 @@ public class SocketController implements Runnable {
 						System.out.println("batch success");
 					} else {
 						msg = "Enter another batch-number: ";
-						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 						pw.flush();
 					}
 					
 				} else {
-					msg = "Batch not found! Try again.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					msg = "Not found! Try again.";
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -203,8 +203,8 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "Make sure the weight is unloaded.";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			String msg = "Is the weight unloaded?";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean unloadedConfirmed = false;
@@ -214,12 +214,18 @@ public class SocketController implements Runnable {
 				
 				if(input == 1) {
 					unloadedConfirmed = true;
-					pw.println("T crlf");
+					pw.println("T");
 					pw.flush();
 					System.out.println("unload success");
+					try {
+						TimeUnit.SECONDS.sleep(2);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					msg = "Unload the weight and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -237,25 +243,32 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "Place tara on the weight, then confirm.";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			String msg = "Place tara.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean taraConfirmed = false;
 			while(!taraConfirmed) {
-				String[] inputArr = reader.readLine().split(" ");
+				String inputString = reader.readLine();
+				String[] inputArr = inputString.split(" ");
 				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
 				if(input == 1) {
 					taraConfirmed = true;
-					pw.println("T crlf");
+					pw.println("T");
 					pw.flush();
 					double taraWeight = getLoadFromString(reader.readLine());
 					dao.setBatchTara(currentBatchID, taraWeight);
 					System.out.println("tara success");
+					try {
+						TimeUnit.SECONDS.sleep(2);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -273,8 +286,8 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "Place brutto on the weight, then confirm.";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			String msg = "Place netto.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean nettoConfirmed = false;
@@ -286,12 +299,12 @@ public class SocketController implements Runnable {
 					double nettoWeight = getLoad();
 					dao.setBatchNetto(currentBatchID, nettoWeight);
 					nettoConfirmed = true;
-					pw.println("T crlf");
+					pw.println("T");
 					pw.flush();
 					System.out.println("tara success");
 				} else {
-					msg = "Try again and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					msg = "Try again!";
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -309,8 +322,8 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "Remove brutto from the weight, then confirm.";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			String msg = "Remove brutto.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean bruttoConfirmed = false;
@@ -324,7 +337,7 @@ public class SocketController implements Runnable {
 					bruttoConfirmed = true;
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
@@ -343,7 +356,7 @@ public class SocketController implements Runnable {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
 			String msg = "OK, batch completed please confirm.";
-			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
 			boolean endConfirmed = false;
@@ -352,12 +365,12 @@ public class SocketController implements Runnable {
 				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
 				
 				if(input == 1) {
-					pw.println("T crlf");
+					pw.println("T");
 					pw.flush();
 					System.out.println("tara success");
 				} else {
 					msg = "Try again and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 					pw.flush();
 				}
 			}
