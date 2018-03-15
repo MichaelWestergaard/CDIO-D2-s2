@@ -20,8 +20,9 @@ public class DAO {
 		users.add(new User(12, "Anders And"));
 		batches.add(new Batch(1234, "Salt"));
 		
-	};
+	}
 
+	
 	public boolean checkUserID(int userID) {
 		if(userID >= 11 && userID <= 99) {
 			for(int i = 0; i < users.size(); i++) {
@@ -33,6 +34,7 @@ public class DAO {
 		return false;
 	}
 
+	
 	public String getUsername(int userID) {
 		for(int i = 0; i < users.size(); i++) {
 			if (userID == users.get(i).getUserID() ) {
@@ -42,6 +44,7 @@ public class DAO {
 		return null;
 	}
 	
+	
 	public String getBatchName(int batchID) {
 		for(int i = 0; i < batches.size(); i++) {
 			if (batchID == batches.get(i).getBatchID()) {
@@ -50,6 +53,7 @@ public class DAO {
 		}
 		return null;
 	}
+	
 	
 	public boolean checkBatchId(int batchID) {
 		if(batchID >= 1000 && batchID <= 9999) {
@@ -62,6 +66,7 @@ public class DAO {
 		return false;
 	}
 
+	
 	public boolean checkUnloaded(double weight) {
 		if(weight == 0.0) {
 			return true;
@@ -70,4 +75,42 @@ public class DAO {
 		}
 	}
 
+	
+	public void setBatchTara(int batchID, double batchTara) {
+		for(int i = 0; i < batches.size(); i++) {
+			if (batchID == batches.get(i).getBatchID()) {
+				batches.get(i).setBatchTara(batchTara);
+			}
+		}
+	}
+	
+	
+	public double getBatchTara(int batchID) {
+		for(int i = 0; i < batches.size(); i++) {
+			if (batchID == batches.get(i).getBatchID()) {
+				return batches.get(i).getBatchTara();
+			}
+		}
+		return 0.0;	//Findes der en bedre løsning?
+	
+	}
+	
+	
+	public void setBatchNetto(int batchID, double batchNetto) {
+		for(int i = 0; i < batches.size(); i++) {
+			if (batchID == batches.get(i).getBatchID()) {
+				batches.get(i).setBatchNetto(batchNetto);
+			}
+		}
+	}
+	
+	
+	public void setBatchBrutto(int batchID, double negativeBatchBrutto) {
+		for(int i = 0; i < batches.size(); i++) {
+			if (batchID == batches.get(i).getBatchID()) {
+				batches.get(i).setBatchBrutto(Math.abs(negativeBatchBrutto));
+			}
+		}
+	}
+	
 }

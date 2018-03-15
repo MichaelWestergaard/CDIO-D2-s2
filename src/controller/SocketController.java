@@ -15,6 +15,7 @@ public class SocketController implements Runnable {
 	Socket socket;
 	static String readLine = null;
 	DAO dao;
+	int currentBatchID;
 	
 	public SocketController() {
 		super();
@@ -61,7 +62,7 @@ public class SocketController implements Runnable {
 	}
 	
 	
-	public void getLoad() {
+	public double getLoad() {
 		try {
 			OutputStream outputStream = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(outputStream);
@@ -71,14 +72,20 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 		
-		while(readLine == null) {
-			
-		}
+		while(readLine == null) {}
 		
 		char[] readChar = readLine.toCharArray();
-		//Push
-		
+		double loadValue = Double.parseDouble(new StringBuilder().append(readChar[9]).append(readChar[10]).append(readChar[11]).append(readChar[12]).toString());
+		return loadValue;
 	}
+	
+	
+	public double getLoadFromString(String loadString) {
+		char[] loadChar = loadString.toCharArray();
+		double loadValue = Double.parseDouble(new StringBuilder().append(loadChar[9]).append(loadChar[10]).append(loadChar[11]).append(loadChar[12]).toString());
+		return loadValue;
+	}
+	
 	
 	public void getTara() {
 		try {
@@ -89,13 +96,11 @@ public class SocketController implements Runnable {
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
-		while(readLine == null) {
-			
-		}
+		while(readLine == null) {}
 		char[] readchar = readLine.toCharArray();
 	}
 
-
+	
 	public void loginProcedure() {		
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -142,6 +147,7 @@ public class SocketController implements Runnable {
 		
 	}
 
+	
 	public void batchProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -162,6 +168,8 @@ public class SocketController implements Runnable {
 					msg = "Confirm: " + dao.getBatchName(input) + "? 1=Y, 0=N"; 
 					pw.println("RM20 8 " + msg);
 					pw.flush();
+					
+					currentBatchID = input;
 					
 					inputArr = reader.readLine().split(" ");
 					input = Integer.parseInt(inputArr[2].replace("\"", ""));
@@ -187,8 +195,7 @@ public class SocketController implements Runnable {
 		}
 	}
 
-
-
+	
 	public void unloadProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -222,7 +229,7 @@ public class SocketController implements Runnable {
 		}		
 	}
 
-
+	
 	public void taraProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -243,6 +250,8 @@ public class SocketController implements Runnable {
 					taraConfirmed = true;
 					pw.println("T crlf");
 					pw.flush();
+					double taraWeight = getLoadFromString(reader.readLine());
+					dao.setBatchTara(currentBatchID, taraWeight);
 					System.out.println("tara success");
 				} else {
 					msg = "Try again and confirm.";
@@ -256,6 +265,110 @@ public class SocketController implements Runnable {
 		}		
 	}
 	
+	
+	public void nettoProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Place brutto on the weight, then confirm.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean nettoConfirmed = false;
+			while(!nettoConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(input == 1) {
+					double nettoWeight = getLoad();
+					dao.setBatchNetto(currentBatchID, nettoWeight);
+					nettoConfirmed = true;
+					pw.println("T crlf");
+					pw.flush();
+					System.out.println("tara success");
+				} else {
+					msg = "Try again and confirm.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	
+	public void bruttoProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "Remove brutto from the weight, then confirm.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean bruttoConfirmed = false;
+			while(!bruttoConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(input == 1) {
+					double negativeBruttoWeight = getLoad();
+					dao.setBatchBrutto(currentBatchID, negativeBruttoWeight);
+					bruttoConfirmed = true;
+				} else {
+					msg = "Try again and confirm.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	
+	public void endBatchProcedure() {
+		try {
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os);
+			InputStream is = socket.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
+			String msg = "OK, batch completed please confirm.";
+			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\" crlf");
+			pw.flush();	
+			
+			boolean endConfirmed = false;
+			while(!endConfirmed) {
+				String[] inputArr = reader.readLine().split(" ");
+				int input = Integer.parseInt(inputArr[2].replace("\"", ""));
+				
+				if(input == 1) {
+					pw.println("T crlf");
+					pw.flush();
+					System.out.println("tara success");
+				} else {
+					msg = "Try again and confirm.";
+					pw.println("RM20 8 " + msg);
+					pw.flush();
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	
+
 	
 	
 	

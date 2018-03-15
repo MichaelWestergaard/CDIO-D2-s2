@@ -10,11 +10,14 @@ public class Main {
 		new Thread(socketcontroller).start();
 		//socketcontroller.write("Test");
 		//socketcontroller.getLoad();
-	
+		
 		
 		socketcontroller.loginProcedure();
 		socketcontroller.batchProcedure();
 		socketcontroller.unloadProcedure();
 		socketcontroller.taraProcedure();
+		socketcontroller.nettoProcedure();
+		socketcontroller.bruttoProcedure();
+		socketcontroller.endBatchProcedure();
 	}
 }
