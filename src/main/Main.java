@@ -7,14 +7,7 @@ public class Main {
 	public static void main(String[] args) {	
 		SocketController socketcontroller = new SocketController();
 		socketcontroller.init();
-		new Thread(socketcontroller).start();		
-//		socketcontroller.loginProcedure();
-//		socketcontroller.batchProcedure();
-//		socketcontroller.unloadProcedure();
-//		socketcontroller.taraProcedure();
-//		socketcontroller.nettoProcedure();
-//		socketcontroller.bruttoProcedure();
-//		socketcontroller.endBatchProcedure();
+		new Thread(socketcontroller).start();
 		
 		while(true) {
 			socketcontroller.completeProcedure();

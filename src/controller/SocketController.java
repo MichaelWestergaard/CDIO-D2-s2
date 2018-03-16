@@ -21,7 +21,6 @@ public class SocketController implements Runnable {
 		dao = new DAO();
 	}
 
-
 	public void init() {
 		try {
 			socket = new Socket("169.254.2.2", 8000);
@@ -31,7 +30,6 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 
 	public void run() {
 		try {
@@ -46,8 +44,7 @@ public class SocketController implements Runnable {
 		}
 
 	}
-
-
+	
 	public void write(String message) {
 		try {
 			OutputStream outputStream = socket.getOutputStream();
@@ -57,7 +54,6 @@ public class SocketController implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	//To to self: Fix antal decimaler.
@@ -77,7 +73,6 @@ public class SocketController implements Runnable {
 		return loadValue;
 	}
 
-
 	//To to self: Fix antal decimaler.
 	public double getLoadFromString(String loadString) {
 		char[] loadChar = loadString.toCharArray();
@@ -87,13 +82,12 @@ public class SocketController implements Runnable {
 
 	public void sleep() {
 		try {
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 
 	public void getTara() {
 		try {
@@ -107,7 +101,6 @@ public class SocketController implements Runnable {
 		while(readLine == null) {}
 		char[] readchar = readLine.toCharArray();
 	}
-
 
 	public void loginProcedure() {		
 		try {
@@ -134,10 +127,10 @@ public class SocketController implements Runnable {
 
 					inputString = reader.readLine();
 					inputArr = inputString.split(" ");
-					
+
 					if(inputArr[1].equals("A")) {
-							userConfirmed = true;
-							System.out.println("success");
+						userConfirmed = true;
+						System.out.println("success");
 					} else {
 						msg = "Enter another ID: ";
 						pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
@@ -156,7 +149,6 @@ public class SocketController implements Runnable {
 		}
 
 	}
-
 
 	public void batchProcedure() {
 		try {
@@ -185,7 +177,7 @@ public class SocketController implements Runnable {
 
 					inputString = reader.readLine();
 					inputArr = inputString.split(" ");
-					
+
 					if(inputArr[1].equals("A")) {
 						batchConfirmed = true;
 						System.out.println("batch success");
@@ -206,7 +198,6 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 
 	public void unloadProcedure() {
 		try {
@@ -243,7 +234,6 @@ public class SocketController implements Runnable {
 		}		
 	}
 
-
 	public void taraProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -260,7 +250,7 @@ public class SocketController implements Runnable {
 				String inputString = reader.readLine();
 				String[] inputArr = inputString.split(" ");
 				sleep();
-				
+
 				if(inputArr[1].equals("A")) {
 					taraConfirmed = true;
 					pw.println("T");
@@ -280,7 +270,6 @@ public class SocketController implements Runnable {
 			e.printStackTrace();
 		}		
 	}
-
 
 	public void nettoProcedure() {
 		try {
@@ -320,7 +309,6 @@ public class SocketController implements Runnable {
 		}		
 	}
 
-
 	public void bruttoProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -354,7 +342,6 @@ public class SocketController implements Runnable {
 		}		
 	}
 
-
 	public void endBatchProcedure() {
 		try {
 			OutputStream os = socket.getOutputStream();
@@ -376,12 +363,9 @@ public class SocketController implements Runnable {
 					pw.println("T");
 					pw.flush();
 					sleep();
-					System.out.println("tara success");
-					System.out.println("YES!!!!");
+					endConfirmed = true;
 				} else {
-					msg = "Try again and confirm.";
-					pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
-					pw.flush();
+					batchProcedure();
 				}
 			}
 
@@ -399,12 +383,5 @@ public class SocketController implements Runnable {
 		bruttoProcedure();
 		endBatchProcedure();
 	}
-
-
-
-
-
-
-
 
 }
