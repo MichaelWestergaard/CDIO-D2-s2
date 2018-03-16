@@ -75,7 +75,6 @@ public class SocketController implements Runnable {
 
 	public void sleep() {
 		try {
-			TimeUnit.SECONDS.sleep(2);		//Lav til 1500 millisekunder?
 			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
