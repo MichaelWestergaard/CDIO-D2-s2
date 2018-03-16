@@ -355,7 +355,7 @@ public class SocketController implements Runnable {
 			InputStream is = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
-			String msg = "OK, batch completed please confirm.";
+			String msg = "Confirm Batch";
 			pw.println("RM20 8 \"" + msg + "\" \"\" \"&3\"");
 			pw.flush();	
 			
