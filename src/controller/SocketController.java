@@ -45,17 +45,6 @@ public class SocketController implements Runnable {
 
 	}
 	
-	public void write(String message) {
-		try {
-			OutputStream outputStream = socket.getOutputStream();
-			PrintWriter pw = new PrintWriter(outputStream);
-			pw.println("RM20 8 \""+ message +"\" \"\" \"&3\"");
-			pw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	//To to self: Fix antal decimaler.
 	public double getLoad() {
 		try {
