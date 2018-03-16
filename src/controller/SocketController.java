@@ -72,24 +72,27 @@ public class SocketController implements Runnable {
 		}
 
 		sleep();		
-		char[] readChar = readLine.toCharArray();
-		double loadValue = Double.parseDouble(new StringBuilder().append(readChar[9]).append(readChar[10]).append(readChar[11]).append(readChar[12]).toString());
+//		char[] readChar = readLine.toCharArray();
+//		double loadValue = Double.parseDouble(new StringBuilder().append(readChar[8]).append(readChar[9]).append(readChar[10]).append(readChar[11]).append(readChar[12]).toString());
+		String[] loadArr = readLine.split(" ");
+		double loadValue = Double.parseDouble(loadArr[2]);
 		return loadValue;
 	}
 
 
 	//To to self: Fix antal decimaler.
 	public double getLoadFromString(String loadString) {
-		char[] loadChar = loadString.toCharArray();
-		double loadValue = Double.parseDouble(new StringBuilder().append(loadChar[9]).append(loadChar[10]).append(loadChar[11]).append(loadChar[12]).toString());
+//		char[] loadChar = loadString.toCharArray();
+//		double loadValue = Double.parseDouble(new StringBuilder().append(loadChar[9]).append(loadChar[10]).append(loadChar[11]).append(loadChar[12]).toString());
+		String[] loadArr = loadString.split(" ");
+		double loadValue = Double.parseDouble(loadArr[2]);
 		return loadValue;
 	}
 
 	public void sleep() {
 		try {
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(2);		//Lav til 1500 millisekunder?
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
